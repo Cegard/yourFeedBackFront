@@ -30,27 +30,23 @@ class Event extends Component{
     }
 
     getUserEventId(){
-        axios.get(`http://localhost:9090/UserEventController/getUserEventByEventId/${this.props.match.params.id}`)
+       /* axios.get(`http://localhost:9090/UserEventController/getUserEventByEventId/${this.props.match.params.id}`)
           .then(res => {
             this.setState({ usersEvent :  res.data });                       
            
-        })
+        })*/
     }
     
 
     componentDidMount() {
-        axios.get(`http://localhost:9090/EventController/getEventById/${this.props.match.params.id}`)
+        axios.get(`http://localhost:9090/getEventById/${this.props.match.params.id}`)
         .then(res => {
           this.setState({ idEvent :  res.data.id });                       
-          this.setState({ name :  res.data.benefit.name });                       
-          this.setState({ description :  res.data.benefit.description });                       
+          this.setState({ name :  res.data.name });                       
           this.setState({ namePlace :  res.data.place.name });                       
           this.setState({ date :  res.data.date });                       
-          this.setState({ maximumPeople :  res.data.benefit.maximumPeople });                       
           this.setState({ peopleRegistered :  0 });    
-          this.setState({ maximumPeopleWating :  res.data.benefit.maximumPeople });                       
-          this.setState({ peopleWating :  0 });                     
-          this.setState({ note :  res.data.note });                       
+          this.setState({ note :  res.data.description });                       
       })
        this.getUserEventId();
 

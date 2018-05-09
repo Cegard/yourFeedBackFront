@@ -12,12 +12,12 @@ class TableEventApp extends Component{
 
         this.state = {
             events: [],
-            headers:["Name","Description","Name Place","Maximum People","People Registered","Date",""],
+            headers:["Name","Name Place","People Registered","Date",""],
         };
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:9090/EventController/getEvents`)
+        axios.get(`http://localhost:9090/getEvents`)
           .then(res => {
             const events = res.data;
             this.setState({ events });
@@ -31,10 +31,8 @@ class TableEventApp extends Component{
         const  colspanheader= this.state.headers.length
         const events = this.state.events.map((event, index) => 
             <Table.Row key = {index}>
-                <Table.HeaderCell >{event.benefit.name}</Table.HeaderCell> 
-                <Table.HeaderCell>{event.benefit.description}</Table.HeaderCell> 
+                <Table.HeaderCell >{event.description}</Table.HeaderCell> 
                 <Table.HeaderCell >{event.place.name}</Table.HeaderCell> 
-                <Table.HeaderCell >{event.benefit.maximumPeople}</Table.HeaderCell> 
                 <Table.HeaderCell >{0}</Table.HeaderCell> 
                 <Table.HeaderCell >
                     {new Intl.DateTimeFormat('en-GB', { 
@@ -43,7 +41,7 @@ class TableEventApp extends Component{
                     day: '2-digit' 
                     }).format(event.data)}
                 </Table.HeaderCell> 
-                <Table.HeaderCell > <Link to={`/Template/Event/${event.id}`}  className="ui large fluid positive button">Register</Link></Table.HeaderCell> 
+                <Table.HeaderCell > <Link to={`/Template/Event/${event.id}`}  className="ui large fluid positive button">Evaluater</Link></Table.HeaderCell> 
             </Table.Row>
             );
         const headers = this.state.headers.map((header, index) => 
