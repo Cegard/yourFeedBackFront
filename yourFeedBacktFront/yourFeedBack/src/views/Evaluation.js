@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios';
 import {  Button, Message , Popup } from 'semantic-ui-react'
+import Carousel from 'nuka-carousel'
 import { Form  } from 'formsy-semantic-ui-react'
 
 
@@ -64,6 +65,17 @@ class Evaluation extends Component{
                     <Form.Field className="center">
                     <h1>{`Event ${this.state.event.name} User ${this.state.userApp.name} ${this.state.userApp.lastName}`}</h1>
                     </Form.Field>
+                    <Form.Field className="center">                    
+                        <Carousel>
+                            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide1"/>
+                            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide2"/>
+                            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide3"/>
+                            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide4"/>
+                            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"/>
+                            <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"/>
+                        </Carousel>
+                    </Form.Field>
+                        
                 </Form>
 
             </div>
