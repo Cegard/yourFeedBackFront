@@ -68,7 +68,7 @@ class Profile extends Component{
             this.setState({ areas });           
         })
 
-        axios.get(`http://localhost:9090/getuserById/${this.state.iduser}`)
+        axios.get(`http://localhost:9090/getUserById/${this.state.iduser}`)
           .then(res => {
             this.setState({ id :  res.data.id });                       
             this.setState({ documentType :  res.data.documentType.id });                       

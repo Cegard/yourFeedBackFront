@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import { Icon, Menu , Table} from 'semantic-ui-react'
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 class TableUserEventApp extends Component{
 
@@ -9,21 +10,13 @@ class TableUserEventApp extends Component{
 
         this.state = {
             events: [],
-            headers:["Order","Name","Type"],
+            headers:["Order","Name","Type Evaluation","Action"],
             title: "Event People"
 
         };
     }
 
-    componentDidMount() {
-        axios.get(`http://localhost:9090/EventController/getEvents`)
-          .then(res => {
-            const events = res.data;
-            this.setState({ events });
-            console.log(events);
-            
-        })
-    }
+
 
     show = dimmer => () => this.setState({ dimmer, open: true })
     render(){
@@ -32,7 +25,8 @@ class TableUserEventApp extends Component{
             <Table.Row key = {index}>
                 <Table.HeaderCell >{index+1}</Table.HeaderCell> 
                 <Table.HeaderCell>{`${userEvent.userApp.name} ${userEvent.userApp.lastName}`}</Table.HeaderCell> 
-                <Table.HeaderCell >{userEvent.type}</Table.HeaderCell> 
+                <Table.HeaderCell >User</Table.HeaderCell> 
+                <Table.HeaderCell > <Link to={`/Template/Event/${userEvent.id}`}  className="ui large fluid positive button">Evaluate</Link></Table.HeaderCell>                 
             </Table.Row>
             );
         const headers = this.state.headers.map((header, index) => 

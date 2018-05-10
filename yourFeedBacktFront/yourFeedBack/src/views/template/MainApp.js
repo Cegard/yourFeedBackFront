@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import TableEventApp from './../TableEventApp.js';
 import Profile from './../Profile.js';
 import Event from './../Event.js';
+import Evaluation from './../Evaluation.js';
 
 
   import {
@@ -17,6 +18,7 @@ class MainApp extends Component{
                 <div className="App-main">
                     <Switch>
                         <Route  path="/Template/Profile" component={Profile}/>
+                        <Route  path="/Template/Evaluation/:id" component={Evaluation}/>
                         <Route  path="/Template/Event/:id" component={Event}/>
                         <Route  path="/Template/EventTable" component={TableEventApp}/>
                     </Switch>

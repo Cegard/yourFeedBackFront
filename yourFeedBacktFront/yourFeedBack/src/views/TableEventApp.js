@@ -1,9 +1,7 @@
 import React,{Component} from 'react'
 import { Icon, Menu, Table , Popup , Button } from 'semantic-ui-react'
 import axios from 'axios';
-import {
-    Link
-   } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class TableEventApp extends Component{
 

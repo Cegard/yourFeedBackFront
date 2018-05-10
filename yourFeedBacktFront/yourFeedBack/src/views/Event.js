@@ -30,11 +30,11 @@ class Event extends Component{
     }
 
     getUserEventId(){
-       /* axios.get(`http://localhost:9090/UserEventController/getUserEventByEventId/${this.props.match.params.id}`)
+        axios.get(`http://localhost:9090/getEvaluatedUserByEventId/${this.props.match.params.id}`)
           .then(res => {
             this.setState({ usersEvent :  res.data });                       
            
-        })*/
+        })
     }
     
 
@@ -43,8 +43,9 @@ class Event extends Component{
         .then(res => {
           this.setState({ idEvent :  res.data.id });                       
           this.setState({ name :  res.data.name });                       
+          this.setState({ description :  res.data.description });                       
           this.setState({ namePlace :  res.data.place.name });                       
-          this.setState({ date :  res.data.date });                       
+          this.setState({ date :  res.data.creationDate });                       
           this.setState({ peopleRegistered :  0 });    
           this.setState({ note :  res.data.description });                       
       })
@@ -117,21 +118,8 @@ class Event extends Component{
                         </label></div>
                     </Form.Group>
                     <Form.Group widths='equal'>
-                        <div className=" field"><label> Maximum People: {this.state.maximumPeople} </label></div>
-                        <div className=" field"><label> People Registered: {this.state.peopleRegistered} </label></div>
-                    </Form.Group>
-                    <Form.Group widths='equal'>
-                        <div className=" field"><label> Maximum People Wating: {this.state.maximumPeopleWating} </label></div>
-                        <div className=" field"><label> People Wating {this.state.peopleWating} </label></div>
-                    </Form.Group>
-                    <Form.Group widths='equal'>
                         <div className=" field"><label> Note:  </label><label>{this.state.note}</label> </div>
                     </Form.Group>
-                    <Form.Field className="center">
-                        <Button size = "large" type='submit'  positive>Register</Button>
-                    </Form.Field>
-                    
-                    
                 </Form>
 
                 <TableUserEventApp usersEvent = {this.state.usersEvent} />
