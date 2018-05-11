@@ -29,16 +29,16 @@ class TableEventApp extends Component{
         const  colspanheader= this.state.headers.length
         const events = this.state.events.map((event, index) => 
             <Table.Row key = {index}>
-                <Table.HeaderCell >{event.description}</Table.HeaderCell> 
-                <Table.HeaderCell >{event.place.name}</Table.HeaderCell> 
-                <Table.HeaderCell >{0}</Table.HeaderCell> 
-                <Table.HeaderCell >
+                <Table.Cell >{event.description}</Table.Cell> 
+                <Table.Cell >{event.place.name}</Table.Cell> 
+                <Table.Cell >{0}</Table.Cell> 
+                <Table.Cell >
                     {new Intl.DateTimeFormat('en-GB', { 
                     year: 'numeric', 
                     month: 'long', 
                     day: '2-digit' 
                     }).format(event.data)}
-                </Table.HeaderCell> 
+                </Table.Cell> 
                 <Table.HeaderCell > <Link to={`/Template/Event/${event.id}`}  className="ui large fluid positive button">Evaluater</Link></Table.HeaderCell> 
             </Table.Row>
             );

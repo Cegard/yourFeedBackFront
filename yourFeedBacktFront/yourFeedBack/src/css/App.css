@@ -16,6 +16,13 @@
 .font20{
   font-size: 20px
 }
+.div-carousel{
+  height: 600px;
+  padding: 10%;
+
+}
+
+
 
 .footer {
   position: fixed;

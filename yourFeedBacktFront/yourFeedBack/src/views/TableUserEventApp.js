@@ -20,13 +20,14 @@ class TableUserEventApp extends Component{
 
     show = dimmer => () => this.setState({ dimmer, open: true })
     render(){
+        console.log(this.props.usersEvent)
         const  colspanheader= this.state.headers.length
         const events = this.props.usersEvent.map((userEvent, index) => 
             <Table.Row key = {index}>
-                <Table.HeaderCell >{index+1}</Table.HeaderCell> 
-                <Table.HeaderCell>{`${userEvent.userApp.name} ${userEvent.userApp.lastName}`}</Table.HeaderCell> 
-                <Table.HeaderCell >User</Table.HeaderCell> 
-                <Table.HeaderCell > <Link to={`/Template/Event/${userEvent.id}`}  className="ui large fluid positive button">Evaluate</Link></Table.HeaderCell>                 
+                <Table.Cell >{index+1}</Table.Cell> 
+                <Table.Cell>{`${userEvent.userApp.name} ${userEvent.userApp.lastName}`}</Table.Cell> 
+                <Table.Cell >User</Table.Cell> 
+                <Table.Cell > <Link to={`/Template/Evaluation/${userEvent.event.id}`}  className="ui large fluid positive button">Evaluate</Link></Table.Cell>                 
             </Table.Row>
             );
         const headers = this.state.headers.map((header, index) => 
