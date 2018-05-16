@@ -17,7 +17,9 @@ class TableUserEventApp extends Component{
     }
 
 
-
+    handleChange = (event, data) => {
+        this.setState({ [data.name]: data.value });
+      };
     show = dimmer => () => this.setState({ dimmer, open: true })
     render(){
         console.log(this.props.usersEvent)
