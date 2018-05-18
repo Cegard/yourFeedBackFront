@@ -5,8 +5,7 @@ pipeline {
 		stage('Build') {
 			steps {
 				echo 'Building...'
-				sh 'pwd'
-				sh 'ls'
+				sh 'rm -Rf yourFeedBacktFront/yourFeedBack/node_modules'
 				sh 'cd yourFeedBacktFront/yourFeedBack && npm install'
 			}
 		}
