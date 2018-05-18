@@ -3,6 +3,7 @@ import {  Button, Message } from 'semantic-ui-react'
 import { Form  } from 'formsy-semantic-ui-react'
 import axios from 'axios';
 
+
  
 class Profile extends Component{
     
@@ -10,7 +11,7 @@ class Profile extends Component{
         super(props);
 
         this.state = {
-            iduser:"1",
+            iduser: localStorage.getItem("idUSer"),
             success: false,
             error: false,
             title: "My Profile",

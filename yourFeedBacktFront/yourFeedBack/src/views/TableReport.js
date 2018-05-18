@@ -11,7 +11,7 @@ class TableReport extends Component{
         this.state = {
             evaluatedUser: [],
             headers:["Name","Name Place","Date",""],
-            userAppId: 1,
+            userAppId: localStorage.getItem("idUSer"),
         };
     }
 
