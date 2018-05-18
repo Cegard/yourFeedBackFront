@@ -1,6 +1,10 @@
 pipeline {
 	agent any
 	
+	tools {
+		npm 'NodeJs'
+	}
+	
 	stages {
 		stage('Build') {
 			steps {
