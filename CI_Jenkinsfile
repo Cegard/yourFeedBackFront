@@ -7,7 +7,7 @@ pipeline {
 				echo 'Building...'
 				sh 'pwd'
 				sh 'ls'
-				sh 'cd yourFeedBacktFront/yourFeedBack && sudo npm install'
+				sh 'cd yourFeedBacktFront/yourFeedBack && npm install'
 			}
 		}
 	}
