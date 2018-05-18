@@ -5,10 +5,8 @@ pipeline {
 		stage('Build') {
 			steps {
 				echo 'Building...'
-				nodejs(nodeJSInstallationName: 'NodeJs'{
-                    sh 'npm config ls'
-                    sh 'npm install'
-                }
+				sh 'pwd'
+				sh 'ls'
 			}
 		}
 	}
