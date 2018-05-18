@@ -1,0 +1,18 @@
+pipeline {
+	agent any
+	
+	stages
+		stage('Deploy') {
+			steps {
+				echo 'Deploying to QA environment...'
+				sh 'scp -r yourFeedBacktFront/yourFeedBack ec2-user@10.0.2.31:/home/ec2-user'
+				sh 'ssh ec2-user@10.0.2.31 cd yourFeedBacktFront/yourFeedBack && npm install && npm start'
+			}
+		}
+		stage('TESTS') {
+			steps{
+				input "Please confirm after you have ran the needed manual tests."
+			}
+		}
+	}
+}
