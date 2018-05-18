@@ -14,6 +14,7 @@ class MenuApp extends Component{
                 <Menu    vertical floated={true} className="App-menu">
                         <Link to="/Template/Profile" className="item">Profile</Link>
                         <Link to="/Template/EventTable" className="item">Events</Link>
+                        <Link to="/Template/ReportTable" className="item">Report</Link>
                 </Menu>
                 
             </div>
