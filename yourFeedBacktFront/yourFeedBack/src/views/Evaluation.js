@@ -14,12 +14,21 @@ class Evaluation extends Component{
             event: "",
             questions: "",
             groups: [],
-            userApp: "",
+            userApp: {"id":1},
             headers:["Question","1","2","3","4"],
             p:[],
             answers: {},
+            comments: {},
             checked: [],
             values: [1,2,3,4],
+            comment:"",
+            commentEvaluation:"",
+            commentsfinish:{},
+            formfinish:[
+                {
+                    text : "Thanks for finish the evaluation",
+                }
+            ]
         };
     }
 
@@ -44,6 +53,7 @@ class Evaluation extends Component{
                     {
                         id: item.id,
                         name: item.name,
+                        description: item.description,
                         questions: [],
                     };
                 this.getQuestion(item.id, index);
@@ -61,11 +71,11 @@ class Evaluation extends Component{
         await axios.get(`http://localhost:9090/getQuestions/${this.state.event.id}/${id}`)
             .then(res => {
                 questions = res.data;
-            });
-            console.log("acacaxdcas",questions);
-    const newGroups = this.state.groups;
-    newGroups[index].questions = questions;
-    this.setState({ groups : newGroups }); 
+        });
+        console.log("acacaxdcas",questions);
+        const newGroups = this.state.groups;
+        newGroups[index].questions = questions;
+        this.setState({ groups : newGroups }); 
     }
 
     componentDidMount() {
@@ -73,20 +83,56 @@ class Evaluation extends Component{
     }
     show = dimmer => () => this.setState({ dimmer, open: true })    
 
-    handleChange = (event, data) => {
-        console.log('data: ', data);
-        this.setState({ [data.name]: data.value });
+    handleChangeCheck = (event, data) => {
         const key = data.quiestionId;
         const val = data.value;
-        const updatedAnswers = {...this.state.answers, [key]: val};
+        const updatedAnswers = {...this.state.answers, [key]: {  score: val ,question:{id:key}}};
+        this.setState({answers: updatedAnswers});
         this.setState({answers: updatedAnswers});
 
         const updatedCheck = this.state.checked;
         updatedCheck[data.quiestionId] = data.value;
         this.setState({checked: updatedCheck});
-        console.log('new answers', this.state.answers);
       };
 
+      handleChangeGroup = (event, data) => {
+        const key = data.groupId;
+        const val = data.value;
+        const updatedComments = {...this.state.comments, [key]: val};
+        const updatedCommentsFinish = {...this.state.commentsfinish, [key]: {id: key, note: val ,groupApp:{id: key}}};
+        
+        this.setState({comments: updatedComments});
+        this.setState({commentsfinish: updatedCommentsFinish});
+
+      };
+
+
+      handleSubmit = event => {
+        console.log(this.state.answers)
+        Object.values(this.state.answers).forEach(element => {
+            console.log(element)
+        });
+        axios.post(`http://localhost:9090/persistEvaluation?idEvent=${this.state.event.id}&idEvaluator=${this.state.userApp.id}&idEvaluatedUser=${this.state.evaluatedUser.id}&note=${this.state.commentEvaluation}`, Object.values(this.state.answers))
+          .then(res => {
+            axios.post(`http://localhost:9090/persistEvaluationGroupComments?idEvaluation=${res.data}`, Object.values(this.state.commentsfinish)).then(res =>{
+                this.setState({success: true });
+                this.setState({error: false });
+
+            }).catch(error => {
+                console.log(error.response)
+                    this.setState({success: false });
+                    this.setState({error: true });
+            });
+                
+            }).catch(error => {
+            console.log(error.response)
+                this.setState({success: false });
+                this.setState({error: true });
+        });
+      }
+      handleChange = (event, data) => {
+        this.setState({ [data.name]: data.value });
+      };
     render(){
         const  colspanheader= this.state.headers.length        
         const headers = this.state.headers.map((header, index) => 
@@ -103,6 +149,9 @@ class Evaluation extends Component{
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell colSpan={colspanheader} >{groupCurrent.name}</Table.HeaderCell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell colSpan={colspanheader} >{groupCurrent.description}</Table.Cell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Header>
@@ -123,7 +172,7 @@ class Evaluation extends Component{
                                     value={value}
                                     index = {index}
                                     checked={this.state.checked[question.id] === value}
-                                    onChange={this.handleChange}
+                                    onChange={this.handleChangeCheck}
                                 />    
                             </Form.Field>
                         </Table.Cell>   
@@ -136,14 +185,32 @@ class Evaluation extends Component{
 
             </Table>
             <Form.Group widths='equal'>
-                <Form.TextArea  label='Comments' type="number" placeholder='Comments For Group' value={this.state.document} name = "document" onChange={this.handleChange} 
-                required 
+                <Form.TextArea  label='Comments' placeholder='Comments For Group' value={this.state.comments[groupCurrent.id]} name = "comments" groupId = {groupCurrent.id}  onChange={this.handleChangeGroup} 
                 validationErrors={{ isDefaultRequiredValue: 'Document is required' }}
                 errorLabel={ errorLabel }
                 />
             </Form.Group>
         </div>
             );
+
+            const formfinish = this.state.formfinish.map((formfinis,index) => 
+                <div className = "div-carousel" key={`finish${index}`}>
+                 <Form.Group widths='equal'>
+                    <h3>Thanks for finish the evaluation</h3>
+                </Form.Group>
+                <Form.Group widths='equal'>
+                    <Form.TextArea  label='Comments' placeholder='Comments For Group' value={this.state.comment} name = "commentEvaluation"   onChange={this.handleChange} 
+                    validationErrors={{ isDefaultRequiredValue: 'Document is required' }}
+                    errorLabel={ errorLabel }
+                    />
+                </Form.Group>
+                <Form.Field className="center">
+                    <Button size = "large" type='submit'  positive>Save</Button>
+                </Form.Field>
+            </div>
+            );
+            
+           const completeForm =  form.concat(formfinish);
             
         return(
             <div>
@@ -171,7 +238,7 @@ class Evaluation extends Component{
                     </Form.Field>
                     <Form.Field className="center">                    
                         <Carousel>
-                            {form}                        
+                            {completeForm}                        
                         </Carousel>
                     </Form.Field>
                         

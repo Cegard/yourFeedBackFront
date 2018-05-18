@@ -1,35 +1,43 @@
 import React,{Component} from 'react'
-import { Icon, Menu , Table} from 'semantic-ui-react'
+import { Icon, Menu, Table , Popup , Button } from 'semantic-ui-react'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
-class TableUserEventApp extends Component{
+class TableReport extends Component{
 
     constructor(props) {
         super(props);
 
         this.state = {
-            events: [],
-            headers:["Order","Name","Type Evaluation","Action"],
-            title: "Event People"
-
+            evaluatedUser: [],
+            headers:["Name","Name Place","Date",""],
+            userAppId: 1,
         };
     }
 
+    componentDidMount() {
+        axios.get(`http://localhost:9090/getEvaluatedsUserById/${this.state.userAppId}`)
+          .then(res => {
+            const evaluatedUser = res.data;
+            this.setState({ evaluatedUser });
+        })
+    }
 
-    handleChange = (event, data) => {
-        this.setState({ [data.name]: data.value });
-      };
     show = dimmer => () => this.setState({ dimmer, open: true })
     render(){
-        console.log(this.props.usersEvent)
         const  colspanheader= this.state.headers.length
-        const events = this.props.usersEvent.map((userEvent, index) => 
+        const evaluatedUser = this.state.evaluatedUser.map((evaluatedUser, index) => 
             <Table.Row key = {index}>
-                <Table.Cell >{index+1}</Table.Cell> 
-                <Table.Cell>{`${userEvent.userApp.name} ${userEvent.userApp.lastName}`}</Table.Cell> 
-                <Table.Cell >User</Table.Cell> 
-                <Table.Cell > <Link to={`/Template/Evaluation/${userEvent.event.id}`}  className="ui large fluid positive button">Evaluate</Link></Table.Cell>                 
+                <Table.Cell >{evaluatedUser.event.description}</Table.Cell> 
+                <Table.Cell >{evaluatedUser.event.place.name}</Table.Cell> 
+                <Table.Cell >
+                    {new Intl.DateTimeFormat('en-GB', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: '2-digit' 
+                    }).format(evaluatedUser.event.data)}
+                </Table.Cell> 
+                <Table.HeaderCell > <Link to={`/Template/ReportEvent/${evaluatedUser.id}`}  className="ui large fluid positive button">Show Report</Link></Table.HeaderCell> 
             </Table.Row>
             );
         const headers = this.state.headers.map((header, index) => 
@@ -37,10 +45,16 @@ class TableUserEventApp extends Component{
         );
         return(
             <div>
+                <Popup trigger={<Button onClick={this.show(false)}>Help</Button>}>
+                <Popup.Header>Information</Popup.Header>
+                <Popup.Content>
+                   In this place you can watch and register on the event avalaible for you.
+                </Popup.Content>
+                </Popup>
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell colSpan={colspanheader}>{this.state.title}</Table.HeaderCell>
+                            <Table.HeaderCell colSpan={colspanheader}>Current Event</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Header>
@@ -51,7 +65,7 @@ class TableUserEventApp extends Component{
                     </Table.Header>
 
                     <Table.Body>
-                        {events}
+                        {evaluatedUser}
                     </Table.Body>
 
                     <Table.Footer>
@@ -76,4 +90,4 @@ class TableUserEventApp extends Component{
     }
 }
 
-export default TableUserEventApp
+export default TableReport

@@ -8,6 +8,10 @@
   margin: 15px;
 }
 
+.chart{
+  height: 200px;
+}
+
 .newuser-form{
   padding: 15px;
   width: 700px;
@@ -17,11 +21,26 @@
   font-size: 20px
 }
 .div-carousel{
-  height: 600px;
+  height: 700px;
   padding: 10%;
 
 }
 
+.celda1{
+  width: 10%
+}
+
+.celda2{
+  width: 70%
+}
+
+.celda3{
+  width: 10%
+}
+
+.celda4{
+  width: 10%
+}
 
 
 .footer {
