@@ -5,7 +5,7 @@ pipeline {
 		stage('Deploy') {
 			steps {
 				echo 'Deploying to QA environment...'
-				sh 'scp -r yourFeedBacktFront/yourFeedBack ec2-user@10.0.2.31:/home/ec2-user'
+				sh 'scp -r yourFeedBacktFront ec2-user@10.0.2.31:/home/ec2-user'
 				sh 'ssh ec2-user@10.0.2.31 cd /home/ec2-user/yourFeedBacktFront/yourFeedBack && npm install && npm start'
 			}
 		}
