@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import HeaderApp from './template/HeaderApp';
+import HeaderLoginApp from './template/HeaderLoginApp';
 import FooterApp from './template/FooterApp';
 import { Form  } from 'formsy-semantic-ui-react'
 import axios from 'axios';
@@ -26,14 +26,15 @@ class Login extends Component{
     };
 
     handleSubmit = event =>{
-        axios.post(`http://localhost:9090/UserController/login`, { 
-            "email": this.state.email ,
+        axios.post(`http://localhost:9090/auth/login`, { 
+            "username": this.state.email ,
             "password": this.state.password,
             
          })
           .then(res => {
                console.log(res.data)
-               if(res.data === "login"){
+               if(res.data !== ""){
+                localStorage.setItem("idUSer",res.data.id);                   
                 this.setState({redirectToReferrer: true });
                 
                }else{
@@ -67,7 +68,7 @@ class Login extends Component{
                     height: 100%;
                 }
                 `}</style>
-                <HeaderApp />
+                <HeaderLoginApp />
                 <Grid
                     textAlign='center'
                 style={{ height: '100%' }}
