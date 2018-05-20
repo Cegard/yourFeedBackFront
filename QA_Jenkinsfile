@@ -6,6 +6,7 @@ pipeline {
 			steps {
 				echo 'Deploying to QA environment...'
 				sh 'scp -r yourFeedBacktFront ec2-user@10.0.2.31:/home/ec2-user'
+				sh 'ssh ec2-user@10.0.2.31 sh killNode.sh'
 				sh 'ssh ec2-user@10.0.2.31 sh nodeService.sh'
 			}
 		}
