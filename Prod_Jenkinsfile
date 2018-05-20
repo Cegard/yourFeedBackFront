@@ -1,0 +1,15 @@
+pipeline {
+	agent any
+	
+	stages{
+		stage('Deploy') {
+			steps {
+				echo 'Deploying to QA environment...'
+				sh 'scp -r yourFeedBacktFront ec2-user@10.0.1.138:/home/ec2-user'
+				sh 'ssh ec2-user@10.0.1.138 sh killNode.sh'
+				sh 'ssh ec2-user@10.0.1.138 sh nodeService.sh'
+			}
+		}
+	}
+}
+
