@@ -26,6 +26,11 @@
 
 }
 
+.right{
+  float: right;
+  color: white;
+}
+
 .celda1{
   width: 10%
 }
