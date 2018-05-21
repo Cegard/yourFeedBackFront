@@ -1,9 +1,7 @@
 import React,{Component} from 'react';
 import { Menu } from 'semantic-ui-react'
 
-import {
-    Link
-   } from 'react-router-dom'
+import {    Link   } from 'react-router-dom'
 
 class MenuApp extends Component{
     state = { activeItem: 'home' }
